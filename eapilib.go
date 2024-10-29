@@ -73,13 +73,16 @@ type EapiConnection struct {
 // EapiConnection, this serves as a base model and is not fully implemented.
 //
 // Args:
-//  commands ([]interface): list of commands to execute on remote node
-//  encoding (string): The encoding to send along with the request
-//                      message to the destination node.  Valid values include
-//                      'json' or 'text'.  This argument will influence the
-//                      response encoding
+//
+//	commands ([]interface): list of commands to execute on remote node
+//	encoding (string): The encoding to send along with the request
+//	                    message to the destination node.  Valid values include
+//	                    'json' or 'text'.  This argument will influence the
+//	                    response encoding
+//
 // Returns:
-//  pointer to JSONRPCResponse or error on failure
+//
+//	pointer to JSONRPCResponse or error on failure
 func (conn *EapiConnection) Execute(commands []interface{},
 	encoding string) (*JSONRPCResponse, error) {
 	if conn == nil {
@@ -93,10 +96,11 @@ func (conn *EapiConnection) Execute(commands []interface{},
 // to eAPI.
 //
 // Args:
-//  username (string): The username to use to authenticate the eAPI
-//                      connection with
-//  password (string): The password in clear text to use to authenticate
-//                      the eAPI connection with
+//
+//	username (string): The username to use to authenticate the eAPI
+//	                    connection with
+//	password (string): The password in clear text to use to authenticate
+//	                    the eAPI connection with
 func (conn *EapiConnection) Authentication(username string, passwd string) {
 	username = strings.Replace(username, "\n", "", -1)
 	passwd = strings.Replace(passwd, "\n", "", -1)
@@ -182,22 +186,23 @@ type SocketEapiConnection struct {
 	EapiConnection
 }
 
-//
 const defaultUnixSocket = "/var/run/command-api.sock"
 
 // NewSocketEapiConnection initializes a SocketEapiConnection.
 //
 // Args:
-//  transport (string): The transport to use to create the instance.
-//  host (string): The IP addres or DNS host name of the connection device.
-//  username(string): The username to pass to the device to authenticate
-//                    the eAPI connection.
-//  password(string): The password to pass to the device to authenticate
-//                    the eAPI connection. The default value is ''
-//  port(int): The TCP port of the endpoint for the eAPI connection.
+//
+//	transport (string): The transport to use to create the instance.
+//	host (string): The IP addres or DNS host name of the connection device.
+//	username(string): The username to pass to the device to authenticate
+//	                  the eAPI connection.
+//	password(string): The password to pass to the device to authenticate
+//	                  the eAPI connection. The default value is ''
+//	port(int): The TCP port of the endpoint for the eAPI connection.
 //
 // Returns:
-//  Newly created SocketEapiConnection
+//
+//	Newly created SocketEapiConnection
 func NewSocketEapiConnection(transport string, host string, username string,
 	password string, port int) EapiConnectionEntity {
 	conn := EapiConnection{transport: transport, host: host, port: port, timeOut: 60}
@@ -265,13 +270,16 @@ func (conn *SocketEapiConnection) send(data []byte) (*JSONRPCResponse, error) {
 // to JSONRPCResponse is returned...otherwise err is set.
 //
 // Args:
-//  commands ([]interface): list of commands to execute on remote node
-//  encoding (string): The encoding to send along with the request
-//                      message to the destination node.  Valid values include
-//                      'json' or 'text'.  This argument will influence the
-//                      response encoding
+//
+//	commands ([]interface): list of commands to execute on remote node
+//	encoding (string): The encoding to send along with the request
+//	                    message to the destination node.  Valid values include
+//	                    'json' or 'text'.  This argument will influence the
+//	                    response encoding
+//
 // Returns:
-//  pointer to JSONRPCResponse or error on failure
+//
+//	pointer to JSONRPCResponse or error on failure
 func (conn *SocketEapiConnection) Execute(commands []interface{},
 	encoding string) (*JSONRPCResponse, error) {
 	if conn == nil {
@@ -301,16 +309,18 @@ const DefaultHTTPLocalPort = 8080
 // NewHTTPLocalEapiConnection initializes a HTTPLocalEapiConnection.
 //
 // Args:
-//  transport (string): The transport to use to create the instance.
-//  host (string): The IP addres or DNS host name of the connection device.
-//  username(string): The username to pass to the device to authenticate
-//                    the eAPI connection.
-//  password(string): The password to pass to the device to authenticate
-//                    the eAPI connection. The default value is ''
-//  port(int): The TCP port of the endpoint for the eAPI connection.
+//
+//	transport (string): The transport to use to create the instance.
+//	host (string): The IP addres or DNS host name of the connection device.
+//	username(string): The username to pass to the device to authenticate
+//	                  the eAPI connection.
+//	password(string): The password to pass to the device to authenticate
+//	                  the eAPI connection. The default value is ''
+//	port(int): The TCP port of the endpoint for the eAPI connection.
 //
 // Returns:
-//  Newly created SocketEapiConnection
+//
+//	Newly created SocketEapiConnection
 func NewHTTPLocalEapiConnection(transport string, host string, username string,
 	password string, port int) EapiConnectionEntity {
 	if port == UseDefaultPortNum {
@@ -329,9 +339,12 @@ func NewHTTPLocalEapiConnection(transport string, host string, username string,
 // a JSONRPCResponse type is returned. Otherwise err is returned.
 //
 // Args:
-//  data ([]byte): data to be sent
+//
+//	data ([]byte): data to be sent
+//
 // Returns:
-//  ptr to JSONRPCResponse on success. Otherwise error will be returned.
+//
+//	ptr to JSONRPCResponse on success. Otherwise error will be returned.
 func (conn *HTTPLocalEapiConnection) send(data []byte) (*JSONRPCResponse, error) {
 	if conn == nil {
 		return &JSONRPCResponse{}, fmt.Errorf("No Connection")
@@ -348,13 +361,16 @@ func (conn *HTTPLocalEapiConnection) send(data []byte) (*JSONRPCResponse, error)
 // to JSONRPCResponse is returned...otherwise err is set.
 //
 // Args:
-//  commands ([]interface): list of commands to execute on remote node
-//  encoding (string): The encoding to send along with the request
-//                      message to the destination node.  Valid values include
-//                      'json' or 'text'.  This argument will influence the
-//                      response encoding
+//
+//	commands ([]interface): list of commands to execute on remote node
+//	encoding (string): The encoding to send along with the request
+//	                    message to the destination node.  Valid values include
+//	                    'json' or 'text'.  This argument will influence the
+//	                    response encoding
+//
 // Returns:
-//  pointer to JSONRPCResponse or error on failure
+//
+//	pointer to JSONRPCResponse or error on failure
 func (conn *HTTPLocalEapiConnection) Execute(commands []interface{},
 	encoding string) (*JSONRPCResponse, error) {
 	if conn == nil {
@@ -380,16 +396,18 @@ const DefaultHTTPPort = 80
 // NewHTTPEapiConnection initializes a HttpEapiConnection.
 //
 // Args:
-//  transport (string): The transport to use to create the instance.
-//  host (string): The IP addres or DNS host name of the connection device.
-//  username(string): The username to pass to the device to authenticate
-//                    the eAPI connection.
-//  password(string): The password to pass to the device to authenticate
-//                    the eAPI connection. The default value is ''
-//  port(int): The TCP port of the endpoint for the eAPI connection.
+//
+//	transport (string): The transport to use to create the instance.
+//	host (string): The IP addres or DNS host name of the connection device.
+//	username(string): The username to pass to the device to authenticate
+//	                  the eAPI connection.
+//	password(string): The password to pass to the device to authenticate
+//	                  the eAPI connection. The default value is ''
+//	port(int): The TCP port of the endpoint for the eAPI connection.
 //
 // Returns:
-//  Newly created HTTPEapiConnection
+//
+//	Newly created HTTPEapiConnection
 func NewHTTPEapiConnection(transport string, host string, username string,
 	password string, port int) EapiConnectionEntity {
 	if port == UseDefaultPortNum {
@@ -409,15 +427,58 @@ func NewHTTPEapiConnection(transport string, host string, username string,
 // a JSONRPCResponse type is returned. Otherwise err is returned.
 //
 // Args:
-//  data ([]byte): data to be sent
+//
+//	data ([]byte): data to be sent
+//
 // Returns:
-//  ptr to JSONRPCResponse on success. Otherwise error will be returned.
+//
+//	ptr to JSONRPCResponse on success. Otherwise error will be returned.
 func (conn *HTTPEapiConnection) send(data []byte) (*JSONRPCResponse, error) {
+	fmt.Printf("customized HTTPEapiConnection")
 	if conn == nil {
 		return &JSONRPCResponse{}, fmt.Errorf("No Connection")
 	}
 
+	/*
+	   tr := &http.Transport{
+	           TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+	           DisableKeepAlives: conn.disableKeepAlive,
+	   }
+	*/
 	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			MinVersion:         tls.VersionTLS10,
+			InsecureSkipVerify: true,
+			CipherSuites: []uint16{
+				// TLS 1.0 - 1.2 cipher suites.
+				tls.TLS_RSA_WITH_RC4_128_SHA,
+				tls.TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+				tls.TLS_RSA_WITH_AES_128_CBC_SHA,
+				tls.TLS_RSA_WITH_AES_256_CBC_SHA,
+				tls.TLS_RSA_WITH_AES_128_CBC_SHA256,
+				tls.TLS_RSA_WITH_AES_128_GCM_SHA256,
+				tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+				tls.TLS_ECDHE_RSA_WITH_RC4_128_SHA,
+				tls.TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+				tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+				tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
+				tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+				tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+				tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
+				tls.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
+				// TLS 1.3 cipher suites.
+				tls.TLS_AES_128_GCM_SHA256,
+				tls.TLS_AES_256_GCM_SHA384,
+				tls.TLS_CHACHA20_POLY1305_SHA256,
+			},
+		},
 		DisableKeepAlives: conn.disableKeepAlive,
 	}
 
@@ -457,13 +518,16 @@ func (conn *HTTPEapiConnection) send(data []byte) (*JSONRPCResponse, error) {
 // to JSONRPCResponse is returned...otherwise err is set.
 //
 // Args:
-//  commands ([]interface): list of commands to execute on remote node
-//  encoding (string): The encoding to send along with the request
-//                      message to the destination node.  Valid values include
-//                      'json' or 'text'.  This argument will influence the
-//                      response encoding
+//
+//	commands ([]interface): list of commands to execute on remote node
+//	encoding (string): The encoding to send along with the request
+//	                    message to the destination node.  Valid values include
+//	                    'json' or 'text'.  This argument will influence the
+//	                    response encoding
+//
 // Returns:
-//  pointer to JSONRPCResponse or error on failure
+//
+//	pointer to JSONRPCResponse or error on failure
 func (conn *HTTPEapiConnection) Execute(commands []interface{},
 	encoding string) (*JSONRPCResponse, error) {
 	if conn == nil {
@@ -494,16 +558,18 @@ const DefaultHTTPSPath = "/command-api"
 // NewHTTPSEapiConnection initializes an HttpsEapiConnection.
 //
 // Args:
-//  transport (string): The transport to use to create the instance.
-//  host (string): The IP addres or DNS host name of the connection device.
-//  username(string): The username to pass to the device to authenticate
-//                    the eAPI connection.
-//  password(string): The password to pass to the device to authenticate
-//                    the eAPI connection. The default value is ''
-//  port(int): The TCP port of the endpoint for the eAPI connection.
+//
+//	transport (string): The transport to use to create the instance.
+//	host (string): The IP addres or DNS host name of the connection device.
+//	username(string): The username to pass to the device to authenticate
+//	                  the eAPI connection.
+//	password(string): The password to pass to the device to authenticate
+//	                  the eAPI connection. The default value is ''
+//	port(int): The TCP port of the endpoint for the eAPI connection.
 //
 // Returns:
-//  Newly created HTTPSEapiConnection
+//
+//	Newly created HTTPSEapiConnection
 func NewHTTPSEapiConnection(transport string, host string, username string,
 	password string, port int) EapiConnectionEntity {
 	if port == UseDefaultPortNum {
@@ -526,19 +592,63 @@ func NewHTTPSEapiConnection(transport string, host string, username string,
 // a JSONRPCResponse type is returned. Otherwise err is returned.
 //
 // Args:
-//  data ([]byte): data to be sent
+//
+//	data ([]byte): data to be sent
+//
 // Returns:
-//  ptr to JSONRPCResponse on success. Otherwise error will be returned.
+//
+//	ptr to JSONRPCResponse on success. Otherwise error will be returned.
 func (conn *HTTPSEapiConnection) send(data []byte) (*JSONRPCResponse, error) {
+	fmt.Printf("customized HTTPSEapiConnection")
 	if conn == nil {
 		return &JSONRPCResponse{}, fmt.Errorf("No Connection")
 	}
 	timeOut := time.Duration(time.Duration(conn.timeOut) * time.Second)
 	url := conn.getURL()
+
+	/*
+	   tr := &http.Transport{
+	           TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+	           DisableKeepAlives: conn.disableKeepAlive,
+	   }
+	*/
 	tr := &http.Transport{
-		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig: &tls.Config{
+			MinVersion:         tls.VersionTLS10,
+			InsecureSkipVerify: true,
+			CipherSuites: []uint16{
+				// TLS 1.0 - 1.2 cipher suites.
+				tls.TLS_RSA_WITH_RC4_128_SHA,
+				tls.TLS_RSA_WITH_3DES_EDE_CBC_SHA,
+				tls.TLS_RSA_WITH_AES_128_CBC_SHA,
+				tls.TLS_RSA_WITH_AES_256_CBC_SHA,
+				tls.TLS_RSA_WITH_AES_128_CBC_SHA256,
+				tls.TLS_RSA_WITH_AES_128_GCM_SHA256,
+				tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+				tls.TLS_ECDHE_RSA_WITH_RC4_128_SHA,
+				tls.TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA,
+				tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+				tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
+				tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+				tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+				tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+				tls.TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
+				tls.TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
+				// TLS 1.3 cipher suites.
+				tls.TLS_AES_128_GCM_SHA256,
+				tls.TLS_AES_256_GCM_SHA384,
+				tls.TLS_CHACHA20_POLY1305_SHA256,
+			},
+		},
 		DisableKeepAlives: conn.disableKeepAlive,
 	}
+
 	client := &http.Client{
 		Timeout:   timeOut,
 		Transport: tr,
@@ -574,13 +684,16 @@ func (conn *HTTPSEapiConnection) send(data []byte) (*JSONRPCResponse, error) {
 // to JSONRPCResponse is returned...otherwise err is set.
 //
 // Args:
-//  commands ([]interface): list of commands to execute on remote node
-//  encoding (string): The encoding to send along with the request
-//                      message to the destination node.  Valid values include
-//                      'json' or 'text'.  This argument will influence the
-//                      response encoding
+//
+//	commands ([]interface): list of commands to execute on remote node
+//	encoding (string): The encoding to send along with the request
+//	                    message to the destination node.  Valid values include
+//	                    'json' or 'text'.  This argument will influence the
+//	                    response encoding
+//
 // Returns:
-//  pointer to JSONRPCResponse or error on failure
+//
+//	pointer to JSONRPCResponse or error on failure
 func (conn *HTTPSEapiConnection) Execute(commands []interface{},
 	encoding string) (*JSONRPCResponse, error) {
 	if conn == nil {
