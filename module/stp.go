@@ -36,7 +36,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 // STPEntity provides a configuration resource for STP
@@ -73,9 +73,12 @@ func (s *STPEntity) Instances() *STPInstanceEntity {
 }
 
 // SetMode sets the spanning tree mode. Valid parameters are:
-// 	mstp or none.
+//
+//	mstp or none.
+//
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (s *STPEntity) SetMode(value string) bool {
 	if value == "" {
 		return s.Configure("no spanning-tree mode")
@@ -101,23 +104,25 @@ func STPInstance(node *goeapi.Node) *STPInstanceEntity {
 //}
 
 // STPInterfaceConfig represents the parsed STP interface config
-// {
-//		"bpduguard"     : "false",
-//		"portfast"      : "true",
-//		"portfast_type" : "edge",
-// }
+//
+//	{
+//			"bpduguard"     : "false",
+//			"portfast"      : "true",
+//			"portfast_type" : "edge",
+//	}
 type STPInterfaceConfig map[string]string
 
 // STPInterfaceCollection is a collection of STPInterfaceConfigs
 // mapped by interface name:
-// {
-//		"Port-Channel1" : STPInterfaceConfig {
-//							"bpduguard"     : "false",
-//							"portfast"      : "true",
-//							"portfast_type" : "edge",
-//						  },
-//		   "Ethernet1" : ...
-// }
+//
+//	{
+//			"Port-Channel1" : STPInterfaceConfig {
+//								"bpduguard"     : "false",
+//								"portfast"      : "true",
+//								"portfast_type" : "edge",
+//							  },
+//			   "Ethernet1" : ...
+//	}
 type STPInterfaceCollection map[string]STPInterfaceConfig
 
 // STPInterfaceEntity provides a configuration resource for STP
@@ -201,9 +206,11 @@ func (s *STPInterfaceEntity) ConfigureInterface(name string, cmds ...string) boo
 
 // SetPortfastType sets the spanning-tree portfast type for the interface name(string) to
 // one of the following valid args:
+//
 //	network
-// 	edge
+//	edge
 //	normal
+//
 // Returns true(bool) if configuration successful
 func (s *STPInterfaceEntity) SetPortfastType(name string, value string) bool {
 	validTypes := map[string]bool{

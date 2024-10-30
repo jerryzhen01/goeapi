@@ -36,7 +36,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 // IPInterfaceConfig represents a parsed IPInterface entry
@@ -82,19 +82,21 @@ func isValidMtu(value int) bool {
 // Get Returns the specific IP interface properties
 // The IPinterface resource returns the following:
 //
-//  * name (str): The name of the interface
-//  * address (str): The IP address of the interface in the form
-//    of A.B.C.D/E
-//  * mtu (int): The configured value for IP MTU.
+//   - name (str): The name of the interface
+//   - address (str): The IP address of the interface in the form
+//     of A.B.C.D/E
+//   - mtu (int): The configured value for IP MTU.
 //
 // Args:
-//  name (string): The interface identifier to retrieve the
-//                 configuration for
+//
+//	name (string): The interface identifier to retrieve the
+//	               configuration for
 //
 // Return:
-//     An IPInterfaceConfig object of key/value pairs that represents
-//     the current configuration of the node.  If the specified
-//     interface does not exist then nil is returned.
+//
+//	An IPInterfaceConfig object of key/value pairs that represents
+//	the current configuration of the node.  If the specified
+//	interface does not exist then nil is returned.
 func (i *IPInterfaceEntity) Get(name string) (IPInterfaceConfig, error) {
 	parent := "interface " + name
 	config, _ := i.GetBlock(parent)
@@ -115,15 +117,17 @@ func (i *IPInterfaceEntity) Get(name string) (IPInterfaceConfig, error) {
 
 // GetAll Returns all of the IP interfaces found in the running-config
 // Example:
-//    {
-//        'Ethernet1': {...},
-//        'Ethernet2': {...}
-//    }
+//
+//	{
+//	    'Ethernet1': {...},
+//	    'Ethernet2': {...}
+//	}
 //
 // Returns:
-//  A map'd object of key/value pairs keyed by interface
-//  name that represents all of the IP interfaces on
-//  the current node.
+//
+//	A map'd object of key/value pairs keyed by interface
+//	name that represents all of the IP interfaces on
+//	the current node.
 func (i *IPInterfaceEntity) GetAll() IPInterfaceConfigMap {
 	var re = regexp.MustCompile(`(?m)^interface\s(.+)`)
 
@@ -147,10 +151,12 @@ func (i *IPInterfaceEntity) GetAll() IPInterfaceConfigMap {
 // value is not configured, then None is returned for the value
 //
 // Args:
-//  config (str): The interface configuration block to parse
+//
+//	config (str): The interface configuration block to parse
 //
 // Return:
-//  string: address of ip interface
+//
+//	string: address of ip interface
 func (i *IPInterfaceEntity) parseAddress(config string) string {
 	var re = regexp.MustCompile(`ip address ([^\s]+)`)
 	match := re.FindStringSubmatch(config)
@@ -166,10 +172,12 @@ func (i *IPInterfaceEntity) parseAddress(config string) string {
 // expected to always be present in the provided config block
 //
 // Args:
-//  config (str): The interface configuration block to parse
+//
+//	config (str): The interface configuration block to parse
 //
 // Return:
-//  string representation of MTU size
+//
+//	string representation of MTU size
 func (i *IPInterfaceEntity) parseMtu(config string) string {
 	var re = regexp.MustCompile(`mtu (\d+)`)
 	match := re.FindStringSubmatch(config)
@@ -181,7 +189,8 @@ func (i *IPInterfaceEntity) parseMtu(config string) string {
 
 // GetEthInterfaces Returns all of the Interfaces found in the running-config
 // Returns:
-//  []string of interfaces
+//
+//	[]string of interfaces
 func (i *IPInterfaceEntity) GetEthInterfaces() []string {
 	var re = regexp.MustCompile(`(?m)^interface\s(Eth.+)`)
 	config := i.Config()
@@ -202,19 +211,22 @@ func (i *IPInterfaceEntity) GetEthInterfaces() []string {
 // this operation will have no effect.
 //
 // Note:
-//  Configuring a logical IP interface on a physical interface will
-//  remove any existing logical switchports have have been created
+//
+//	Configuring a logical IP interface on a physical interface will
+//	remove any existing logical switchports have have been created
 //
 // Args:
-//  name (string): The interface identifier to create the logical
-//  layer 3 IP interface for.  The name must be the full interface
-//  name and not an abbreviated interface name (eg Ethernet1, not
-//  Et1).
+//
+//	name (string): The interface identifier to create the logical
+//	layer 3 IP interface for.  The name must be the full interface
+//	name and not an abbreviated interface name (eg Ethernet1, not
+//	Et1).
 //
 // Returns:
-//  True if the create operation succeeds otherwise False.  If the
-//  specified interface is already created the this method will
-//  have no effect but will still return True
+//
+//	True if the create operation succeeds otherwise False.  If the
+//	specified interface is already created the this method will
+//	have no effect but will still return True
 func (i *IPInterfaceEntity) Create(name string) bool {
 	commands := []string{
 		"interface " + name,
@@ -229,13 +241,15 @@ func (i *IPInterfaceEntity) Create(name string) bool {
 // IP interface defined, then this method will have no effect.
 //
 // Args:
-//  name (string): The interface identifier to create the logical
-//  layer 3 IP interface for.  The name must be the full interface
-//  name and not an abbreviated interface name (eg Ethernet1, not
-//  Et1).
+//
+//	name (string): The interface identifier to create the logical
+//	layer 3 IP interface for.  The name must be the full interface
+//	name and not an abbreviated interface name (eg Ethernet1, not
+//	Et1).
 //
 // Returns:
-//  True if the delete operation succeeds otherwise False.
+//
+//	True if the delete operation succeeds otherwise False.
 func (i *IPInterfaceEntity) Delete(name string) bool {
 	commands := []string{
 		"interface " + name,
@@ -247,14 +261,16 @@ func (i *IPInterfaceEntity) Delete(name string) bool {
 
 // SetAddress Configures the interface IP address
 // Args:
-//  name (string): The interface identifier to apply the interface
-//                 config to
-//  value (string): The IP address and mask to set the interface to.
-//                  The value should be in the format of A.B.C.D/E
-//                  Value of "" deconfigured ip address
+//
+//	name (string): The interface identifier to apply the interface
+//	               config to
+//	value (string): The IP address and mask to set the interface to.
+//	                The value should be in the format of A.B.C.D/E
+//	                Value of "" deconfigured ip address
 //
 // Returns:
-//  True if the operation succeeds
+//
+//	True if the operation succeeds
 func (i *IPInterfaceEntity) SetAddress(name string, value string) bool {
 	commands := []string{"interface " + name}
 	if value != "" {
@@ -267,10 +283,13 @@ func (i *IPInterfaceEntity) SetAddress(name string, value string) bool {
 
 // SetAddressDefault Configures the default interface IP address
 // Args:
-//  name (string): The interface identifier to apply the interface
-//                 config to
+//
+//	name (string): The interface identifier to apply the interface
+//	               config to
+//
 // Returns:
-//  True if the operation succeeds
+//
+//	True if the operation succeeds
 func (i *IPInterfaceEntity) SetAddressDefault(name string) bool {
 	commands := []string{
 		"interface " + name,
@@ -281,13 +300,15 @@ func (i *IPInterfaceEntity) SetAddressDefault(name string) bool {
 
 // SetMtu Configures the interface IP MTU
 // Args:
-//  name (string): The interface identifier to apply the interface
-//                 config to
-//  value (integer): The MTU value to set the interface to.  Accepted
-//                   values include 68 to 65535
+//
+//	name (string): The interface identifier to apply the interface
+//	               config to
+//	value (integer): The MTU value to set the interface to.  Accepted
+//	                 values include 68 to 65535
 //
 // Returns:
-//  True if the operation succeeds otherwise False.
+//
+//	True if the operation succeeds otherwise False.
 func (i *IPInterfaceEntity) SetMtu(name string, value int) bool {
 	if !isValidMtu(value) {
 		return false
@@ -301,10 +322,13 @@ func (i *IPInterfaceEntity) SetMtu(name string, value int) bool {
 
 // SetMtuDefault Configures the default interface IP MTU
 // Args:
-//  name (string): The interface identifier to apply the interface
-//                 config to
+//
+//	name (string): The interface identifier to apply the interface
+//	               config to
+//
 // Returns:
-//  True if the operation succeeds otherwise False.
+//
+//	True if the operation succeeds otherwise False.
 func (i *IPInterfaceEntity) SetMtuDefault(name string) bool {
 	commands := []string{
 		"interface " + name,

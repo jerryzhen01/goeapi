@@ -37,7 +37,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 // BgpNetworkEntry represents a BGP network config entry
@@ -87,12 +87,14 @@ func (b *BgpConfig) MaximumEcmpPaths() string {
 // Each entry represents a bgp network entry. Entry formed as
 // follows:
 // [
-// 	  	{
+//
+//	  	{
 //			"prefix":"",
 //			"masklen":"",
 //			"route_map":"",
 //		},
 //		{..
+//
 // ]
 func (b *BgpConfig) Networks() []BgpNetworkEntry {
 	return b.networks
@@ -177,10 +179,10 @@ func (b *BGPEntity) parseRouterID(config string) string {
 // parseMaxPaths parses the given BGP config for maximum paths entries.
 // Returned is a map[string]string with keys maximum_paths or maximum_ecmp_paths
 //
-//  {
-//	      "maximum_paths"      : "3",
-//	      "maximum_ecmp_paths" : "4",
-//  }
+//	 {
+//		      "maximum_paths"      : "3",
+//		      "maximum_ecmp_paths" : "4",
+//	 }
 func (b *BGPEntity) parseMaxPaths(config string) map[string]string {
 	var maxPaths string
 	var maxEcmp string
@@ -375,22 +377,24 @@ func (b *BGPEntity) RemoveNetwork(prefix string, maskLen string) bool {
 }
 
 // BgpNeighborConfig represents the parsed Bgp neighbor config
-// {
-//		"peer_group"		: "peer1",
-//		"remote_as"			: "99",
-//		"send_community"	: "true",
-//		"shutdown"			: "false",
-//		"description"		: "This is a bgp entity",
-//		"next_hop_self"		: "1.1.1.1",
-//		"route_in_map"		: "in-map",
-//		"route_out_map"		: "out-map",
-// }
+//
+//	{
+//			"peer_group"		: "peer1",
+//			"remote_as"			: "99",
+//			"send_community"	: "true",
+//			"shutdown"			: "false",
+//			"description"		: "This is a bgp entity",
+//			"next_hop_self"		: "1.1.1.1",
+//			"route_in_map"		: "in-map",
+//			"route_out_map"		: "out-map",
+//	}
 type BgpNeighborConfig map[string]string
 
 // BgpNeighborCollection is a collection of BgpNeighborConfigs.
 // Each key entry of the collection is a unique neighbor(key:string)
 // mapping to its respective BGPNeighborConfig:
 // Example:
+//
 //	{
 //		"172.16.10.1" : BgpNeighborConfig
 //					{
@@ -578,11 +582,13 @@ func (b *BgpNeighborsEntity) Configure(cmd string) bool {
 
 // CommandBuilder (redefined from base) Builds proper bgp neighbot
 // configuration command based on provided arguments:
-// 	name(string) - neighbor name
-// 	cmd(string) - command to use
-// 	value(string) - additional parameters for command
-// 	def(bool) - If true, Default configuration needed
-// 	shut(bool) - If true, negate configure command
+//
+//	name(string) - neighbor name
+//	cmd(string) - command to use
+//	value(string) - additional parameters for command
+//	def(bool) - If true, Default configuration needed
+//	shut(bool) - If true, negate configure command
+//
 // Returns compiled command. If def is 'true', command is returned
 // with 'default' prepended. If shut is 'true', command is returned
 // with 'no' prepended.
@@ -630,7 +636,9 @@ func (b *BgpNeighborsEntity) SetRemoteASDefault(name string) bool {
 }
 
 // SetShutdown set the neighbor name(string) shutdown state to
+//
 //	shut(boo) - true:shutdown,    false:no shutdown
+//
 // Returns true(bool) if the commands complete successfully
 func (b *BgpNeighborsEntity) SetShutdown(name string, shut bool) bool {
 	cmd := b.CommandBuilder(name, "shutdown", "", false, shut)

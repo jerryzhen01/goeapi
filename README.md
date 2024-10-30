@@ -1,4 +1,4 @@
-# Arista Go eAPI Library [![Build Status](https://travis-ci.org/aristanetworks/goeapi.svg?branch=master)](https://travis-ci.org/aristanetworks/goeapi) [![codecov.io](http://codecov.io/github/aristanetworks/goeapi/coverage.svg?branch=master)](http://codecov.io/github/aristanetworks/goeapi?branch=master) [![GoDoc](https://godoc.org/github.com/aristanetworks/goeapi?status.png)](https://godoc.org/github.com/aristanetworks/goeapi)
+# Arista Go eAPI Library [![Build Status](https://travis-ci.org/aristanetworks/goeapi.svg?branch=master)](https://travis-ci.org/aristanetworks/goeapi) [![codecov.io](http://codecov.io/github/aristanetworks/goeapi/coverage.svg?branch=master)](http://codecov.io/github/aristanetworks/goeapi?branch=master) [![GoDoc](https://godoc.org/github.com/jerryzhen01/goeapi?status.png)](https://godoc.org/github.com/jerryzhen01/goeapi)
 
 
 #### Table of Contents
@@ -33,7 +33,7 @@ The libray is freely provided to the open source community for building robust a
 First, it is assumed you have and are working in a standard [Go](https://www.golang.org) workspace, as described in http://golang.org/doc/code.html, with proper [GOPATH](https://golang.org/doc/code.html#GOPATH) set. Go 1.5+ is what's recommended for using goeapi. To download and install goeapi:
 
 ```console
-$ go get github.com/aristanetworks/goeapi
+$ go get github.com/jerryzhen01/goeapi
 ```
 
 After setting up Go and installing goeapi, any required build tools can be installed by bootstrapping your environment via:
@@ -44,7 +44,7 @@ $ make bootstrap
 
 # Upgrading
   ```
-  $ go get -u github.com/aristanetworks/goeapi
+  $ go get -u github.com/jerryzhen01/goeapi
   ```
 
 # Getting Started
@@ -121,8 +121,8 @@ package main
 import (
         "fmt"
 
-        "github.com/aristanetworks/goeapi"
-        "github.com/aristanetworks/goeapi/module"
+        "github.com/jerryzhen01/goeapi"
+        "github.com/jerryzhen01/goeapi/module"
 )
 
 func main() {
@@ -210,7 +210,7 @@ package main
 import (
         "fmt"
 
-        "github.com/aristanetworks/goeapi"
+        "github.com/jerryzhen01/goeapi"
 )
 
 type MyShowVlan struct {
@@ -276,7 +276,7 @@ There are several go example's using goeapi (as well as example .eapi.config fil
 
 Documentation can be generated locally in plain text via:
 ```sh
-$ godoc github.com/aristanetworks/goeapi
+$ godoc github.com/jerryzhen01/goeapi
 ```
 Or you can run the local godoc server and view the html version of the documentation by pointing your browser at http://localhost:6060
 ```sh

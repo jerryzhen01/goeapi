@@ -4,7 +4,7 @@ GOTEST_FLAGS := -v
 TEST_TIMEOUT := 180s
 
 GOFILES := find . -name '*.go' ! -path './Godeps/*' ! -path './vendor/*'
-GOFOLDERS := $(GO) list ./... | sed 's:^github.com/aristanetworks/goeapi:.:' | grep -vw -e './vendor' -e './examples'
+GOFOLDERS := $(GO) list ./... | sed 's:^github.com/jerryzhen01/goeapi:.:' | grep -vw -e './vendor' -e './examples'
 
 # Code Coverage Related
 COVER_TMPFILE := coverage.out

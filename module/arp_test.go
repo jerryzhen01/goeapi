@@ -3,7 +3,7 @@ package module
 import (
 	"testing"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 func TestShowARP_UnitTest(t *testing.T) {

@@ -38,7 +38,7 @@
 
 package module
 
-import "github.com/aristanetworks/goeapi"
+import "github.com/jerryzhen01/goeapi"
 
 // AbstractBaseEntity object for all resources to derive from
 //
@@ -46,33 +46,37 @@ import "github.com/aristanetworks/goeapi"
 // designed to be implemented by all resource classes to provide common
 // methods.
 // Attributes:
-//  node (Node): The node instance this resource will perform operations
-//               against for configuration
-//  config (Config): Returns an instance of Config with the nodes
-//                   current running configuration
-//  error (CommandError): Holds the latest Error exception
-//                    instance if raised
+//
+//	node (Node): The node instance this resource will perform operations
+//	             against for configuration
+//	config (Config): Returns an instance of Config with the nodes
+//	                 current running configuration
+//	error (CommandError): Holds the latest Error exception
+//	                  instance if raised
 type AbstractBaseEntity struct {
 	node *goeapi.Node
 }
 
 // Config returns the current running configuration
 // Returns:
-//      String: running config
+//
+//	String: running config
 func (b *AbstractBaseEntity) Config() string {
 	return b.node.RunningConfig()
 }
 
 // Version returns the current running version
 // Returns:
-//      String: version
+//
+//	String: version
 func (b *AbstractBaseEntity) Version() string {
 	return b.node.Version()
 }
 
 // Error returns the current error exception
 // Returns:
-//      Error: current error
+//
+//	Error: current error
 func (b *AbstractBaseEntity) Error() error {
 	return b.node.GetConnection().Error()
 }
@@ -80,13 +84,15 @@ func (b *AbstractBaseEntity) Error() error {
 // GetBlock scans the config and returns a block of code
 //
 // Args:
-//  parent (str): The parent string to search the config for and
-//                return the block
+//
+//	parent (str): The parent string to search the config for and
+//	              return the block
 //
 // Returns:
-//  A string that represents the block from the config.  If
-//  the parent string is not found, then this method will
-//  return None.
+//
+//	A string that represents the block from the config.  If
+//	the parent string is not found, then this method will
+//	return None.
 func (b *AbstractBaseEntity) GetBlock(parent string) (string, error) {
 	parent = `(?m)^` + parent + `$`
 	return b.node.GetSection(parent, "running-config")
@@ -98,12 +104,14 @@ func (b *AbstractBaseEntity) GetBlock(parent string) (string, error) {
 // commands specified.
 //
 // Args:
-//  commands (list): A list of commands to be sent to the node in
-//                   config mode
+//
+//	commands (list): A list of commands to be sent to the node in
+//	                 config mode
 //
 // Returns:
-//  True if the commands are executed without exception otherwise
-//  False is returned
+//
+//	True if the commands are executed without exception otherwise
+//	False is returned
 func (b *AbstractBaseEntity) Configure(commands ...string) bool {
 	return b.node.Config(commands...)
 }
@@ -111,13 +119,16 @@ func (b *AbstractBaseEntity) Configure(commands ...string) bool {
 // CommandBuilder builds a command with keywords
 //
 // Args:
-//  cmd (string): The Command string
-//  value (string): The configuration setting to substitute into the command
-//                  string.
-//  def (bool):    Specifies if command should use default keyword argument
-//  enable (bool): Specifies if command is enabled or disabled
+//
+//	cmd (string): The Command string
+//	value (string): The configuration setting to substitute into the command
+//	                string.
+//	def (bool):    Specifies if command should use default keyword argument
+//	enable (bool): Specifies if command is enabled or disabled
+//
 // Returns:
-//  A command string that can be used to configure the node
+//
+//	A command string that can be used to configure the node
 func (b *AbstractBaseEntity) CommandBuilder(cmd string, value string, def bool,
 	enable bool) string {
 	if value != "" {
@@ -135,11 +146,13 @@ func (b *AbstractBaseEntity) CommandBuilder(cmd string, value string, def bool,
 // ConfigureInterface Configures the specified interface with the commands
 //
 // Args:
-//  name (str): The interface name to configure
-//  commands: The commands to configure in the interface
+//
+//	name (str): The interface name to configure
+//	commands: The commands to configure in the interface
 //
 // Returns:
-//  True if the commands completed successfully
+//
+//	True if the commands completed successfully
 func (b *AbstractBaseEntity) ConfigureInterface(name string, commands ...string) bool {
 	var cmd = []string{"interface " + name}
 	commands = append(cmd, commands...)

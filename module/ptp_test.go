@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 /**

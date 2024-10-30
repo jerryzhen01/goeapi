@@ -38,7 +38,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 var (
@@ -110,7 +110,8 @@ func findDiff(slice1 []string, slice2 []string) []string {
 // isVlan helper function to validate vlan id
 //
 // Args:
-//  vlan (string): vlan id
+//
+//	vlan (string): vlan id
 func isVlan(vlan string) bool {
 	vid, _ := strconv.Atoi(vlan)
 	return vid > 0 && vid < 4095
@@ -118,13 +119,15 @@ func isVlan(vlan string) bool {
 
 // Get returns the VLAN configuration as a resource object.
 // Args:
-//  vid (string): The vlan identifier to retrieve from the
-//                running configuration.  Valid values are in the range
-//                of 1 to 4095
+//
+//	vid (string): The vlan identifier to retrieve from the
+//	              running configuration.  Valid values are in the range
+//	              of 1 to 4095
 //
 // Returns:
-//  VlanConfig object containing the VLAN attributes as
-//  key/value pairs.
+//
+//	VlanConfig object containing the VLAN attributes as
+//	key/value pairs.
 func (v *VlanEntity) Get(vlan string) VlanConfig {
 	parent := "vlan " + vlan
 	config, err := v.GetBlock(parent)
@@ -140,7 +143,8 @@ func (v *VlanEntity) Get(vlan string) VlanConfig {
 
 // GetAll Returns a VlanConfigMap object of all Vlans in the running-config
 // Returns:
-//  A VlanConfigMap type of all Vlan attributes
+//
+//	A VlanConfigMap type of all Vlan attributes
 func (v *VlanEntity) GetAll() VlanConfigMap {
 	config := v.Config()
 
@@ -156,10 +160,12 @@ func (v *VlanEntity) GetAll() VlanConfigMap {
 // GetSection returns the specified Vlan Entry for the name specified.
 //
 // Args:
-//  vlan (string): The vlan id
+//
+//	vlan (string): The vlan id
 //
 // Returns:
-//  Returns string representation of Vlan config entry
+//
+//	Returns string representation of Vlan config entry
 func (v *VlanEntity) GetSection(vlan string) string {
 	parent := fmt.Sprintf(`vlan\s+(%s$)|(%s,.*)|(.*,%s,)|(.*,%s$)`,
 		vlan, vlan, vlan, vlan)
@@ -175,10 +181,13 @@ func (v *VlanEntity) GetSection(vlan string) string {
 // vlan name.
 //
 // Args:
-//  config (string): The vlan configuration block from the nodes running
-//                configuration
+//
+//	config (string): The vlan configuration block from the nodes running
+//	              configuration
+//
 // Returns:
-//  string value of name
+//
+//	string value of name
 func (v *VlanEntity) parseName(config string) string {
 	if config == "" {
 		return ""
@@ -195,10 +204,13 @@ func (v *VlanEntity) parseName(config string) string {
 // the vlan state config.
 //
 // Args:
-//  config (string): The vlan configuration block from the nodes
-//                running configuration
+//
+//	config (string): The vlan configuration block from the nodes
+//	              running configuration
+//
 // Returns:
-//  string: state of the vlan
+//
+//	string: state of the vlan
 func (v *VlanEntity) parseState(config string) string {
 	if config == "" {
 		return ""
@@ -215,10 +227,13 @@ func (v *VlanEntity) parseState(config string) string {
 // an empty string is returned as the vlaue.
 //
 // Args:
-//  config (string): The vlan configuration block form the node's
-//                running configuration
+//
+//	config (string): The vlan configuration block form the node's
+//	              running configuration
+//
 // Returns:
-//  string: comma separated list of trunkgroups
+//
+//	string: comma separated list of trunkgroups
 func (v *VlanEntity) parseTrunkGroups(config string) string {
 	trunkGroups := []string{}
 
@@ -241,10 +256,12 @@ func (v *VlanEntity) parseTrunkGroups(config string) string {
 // Create Creates a new VLAN resource
 //
 // Args:
-//  vid (string): The VLAN ID to create
+//
+//	vid (string): The VLAN ID to create
 //
 // Returns:
-//  True if create was successful otherwise False
+//
+//	True if create was successful otherwise False
 func (v *VlanEntity) Create(vid string) bool {
 	var commands = []string{"vlan " + vid}
 	if isVlan(vid) {
@@ -256,10 +273,12 @@ func (v *VlanEntity) Create(vid string) bool {
 // Delete Deletes a VLAN from the running configuration
 //
 // Args:
-//  vid (string): The VLAN ID to delete
+//
+//	vid (string): The VLAN ID to delete
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) Delete(vid string) bool {
 	var commands = []string{"no vlan " + vid}
 	if isVlan(vid) {
@@ -272,13 +291,15 @@ func (v *VlanEntity) Delete(vid string) bool {
 //
 // .. code-block:: none
 //
-//    default vlan <vlanid>
+//	default vlan <vlanid>
 //
 // Args:
-//  vid (string): The VLAN ID to default
+//
+//	vid (string): The VLAN ID to default
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) Default(vid string) bool {
 	var commands = []string{"default vlan " + vid}
 	if isVlan(vid) {
@@ -290,11 +311,13 @@ func (v *VlanEntity) Default(vid string) bool {
 // ConfigureVlan Configures the specified Vlan using commands
 //
 // Args:
-//  vid (string): The VLAN ID to configure
-//  commands: The list of commands to configure
+//
+//	vid (string): The VLAN ID to configure
+//	commands: The list of commands to configure
 //
 // Returns:
-//  True if the commands completed successfully
+//
+//	True if the commands completed successfully
 func (v *VlanEntity) ConfigureVlan(vid string, cmds ...string) bool {
 	var commands = []string{"vlan " + vid}
 	commands = append(commands, cmds...)
@@ -304,14 +327,17 @@ func (v *VlanEntity) ConfigureVlan(vid string, cmds ...string) bool {
 // SetName Configures the VLAN name
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to Configures
-//  name (string): The value to configure the vlan name
+//
+//	vid (string): The VLAN ID to Configures
+//	name (string): The value to configure the vlan name
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) SetName(vid string, name string) bool {
 	return v.ConfigureVlan(vid, "name "+name)
 }
@@ -319,13 +345,16 @@ func (v *VlanEntity) SetName(vid string, name string) bool {
 // SetNameDefault Configures the VLAN name
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to Configures
+//
+//	vid (string): The VLAN ID to Configures
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) SetNameDefault(vid string) bool {
 	return v.ConfigureVlan(vid, "default name")
 }
@@ -333,14 +362,17 @@ func (v *VlanEntity) SetNameDefault(vid string) bool {
 // SetState Configures the VLAN state
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to configure
-//  value (string): The value to set the vlan state to
+//
+//	vid (string): The VLAN ID to configure
+//	value (string): The value to set the vlan state to
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) SetState(vid string, value string) bool {
 	if value == "" {
 		return v.ConfigureVlan(vid, "no state")
@@ -351,13 +383,16 @@ func (v *VlanEntity) SetState(vid string, value string) bool {
 // SetStateDefault Configures the VLAN state
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to configure
+//
+//	vid (string): The VLAN ID to configure
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) SetStateDefault(vid string) bool {
 	return v.ConfigureVlan(vid, "default state")
 }
@@ -370,15 +405,18 @@ func (v *VlanEntity) SetStateDefault(vid string) bool {
 // group names to be added and to be removed.
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to configure
-//  value (string): The list of trunk groups that should be configured
-//               for this vlan id.
+//
+//	vid (string): The VLAN ID to configure
+//	value (string): The list of trunk groups that should be configured
+//	             for this vlan id.
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) SetTrunkGroup(vid string, value []string) bool {
 	var failure = false
 
@@ -407,13 +445,16 @@ func (v *VlanEntity) SetTrunkGroup(vid string, value []string) bool {
 // group names to be added and to be removed.
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to configure
+//
+//	vid (string): The VLAN ID to configure
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) SetTrunkGroupDefault(vid string) bool {
 	return v.ConfigureVlan(vid, "default trunk group")
 }
@@ -421,14 +462,17 @@ func (v *VlanEntity) SetTrunkGroupDefault(vid string) bool {
 // AddTrunkGroup Adds a new trunk group to the Vlan in the running-config
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to configure
-//  name (string): The trunk group to add to the list
+//
+//	vid (string): The VLAN ID to configure
+//	name (string): The trunk group to add to the list
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) AddTrunkGroup(vid string, name string) bool {
 	var commands = []string{"trunk group " + name}
 	return v.ConfigureVlan(vid, commands...)
@@ -438,14 +482,17 @@ func (v *VlanEntity) AddTrunkGroup(vid string, name string) bool {
 // groups for the specified VLAN ID
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  vid (string): The VLAN ID to configure
-//  name (string): The trunk group to add to the list
+//
+//	vid (string): The VLAN ID to configure
+//	name (string): The trunk group to add to the list
 //
 // Returns:
-//  True if the operation was successful otherwise False
+//
+//	True if the operation was successful otherwise False
 func (v *VlanEntity) RemoveTrunkGroup(vid string, name string) bool {
 	var commands = []string{"no trunk group " + name}
 	return v.ConfigureVlan(vid, commands...)

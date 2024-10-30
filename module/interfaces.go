@@ -37,7 +37,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 var validInterfaces = map[string]bool{
@@ -50,12 +50,13 @@ var validInterfaces = map[string]bool{
 }
 
 // InterfaceConfig represents the parsed Interface config
-// {
-//		"name"			: "ethernet1",
-//		"type"			: "generic",
-//		"shutdown"		: "false",
-//		"description"	: "Backhaul-to-East",
-// }
+//
+//	{
+//			"name"			: "ethernet1",
+//			"type"			: "generic",
+//			"shutdown"		: "false",
+//			"description"	: "Backhaul-to-East",
+//	}
 type InterfaceConfig map[string]string
 
 // BaseInterfaceEntity provides a configuration resource for Interface
@@ -448,21 +449,22 @@ func (p *PortChannelInterfaceEntity) SetMinimumLinksDefault(name string) bool {
 // VxlanInterfaceConfig represents the parsed Vxlan interface config
 // {
 //
-//		"name"				: "Vxlan1"
-//		"type"				: "vxlan"
-//		"shutdown"			: "false"
-//		"description"		: ""
-//		"source_interface"	: "Ethernet1",
-//		"multicast_group"	: "",
-//		"udp_port"			: "1024",
-//		"flood_list"		: "",
-// }
+//			"name"				: "Vxlan1"
+//			"type"				: "vxlan"
+//			"shutdown"			: "false"
+//			"description"		: ""
+//			"source_interface"	: "Ethernet1",
+//			"multicast_group"	: "",
+//			"udp_port"			: "1024",
+//			"flood_list"		: "",
+//	}
 type VxlanInterfaceConfig map[string]string
 
 // VxlanConfigCollection is a collection of Vxlan interfaces
-// {
-//		"1" : VxlanInterfaceConfig{},
-// }
+//
+//	{
+//			"1" : VxlanInterfaceConfig{},
+//	}
 type VxlanConfigCollection map[string]VxlanInterfaceConfig
 
 // VxlanInterfaceEntity provides a configuration resource for Vxlan

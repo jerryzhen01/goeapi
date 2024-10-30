@@ -33,7 +33,7 @@
 package module
 
 import (
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 // ShowVersion defined data structure for mapping JSON response

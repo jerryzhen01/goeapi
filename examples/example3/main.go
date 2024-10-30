@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 func main() {

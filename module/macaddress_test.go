@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 func TestShowMACAddressTable_UnitTest(t *testing.T) {

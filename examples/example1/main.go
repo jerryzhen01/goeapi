@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/aristanetworks/goeapi"
-	"github.com/aristanetworks/goeapi/module"
+	"github.com/jerryzhen01/goeapi"
+	"github.com/jerryzhen01/goeapi/module"
 )
 
 func main() {

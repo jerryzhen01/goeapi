@@ -36,7 +36,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 // SystemEntity provides a configuration resource for System
@@ -69,10 +69,11 @@ func System(node *goeapi.Node) *SystemEntity {
 //
 // The System resource returns the following:
 //
-//    * hostname (str): The hostname value
+//   - hostname (str): The hostname value
 //
 // Returns:
-//  SystemConfig: Represents the node's system configuration
+//
+//	SystemConfig: Represents the node's system configuration
 func (s *SystemEntity) Get() SystemConfig {
 	config := s.Config()
 	var resource = make(SystemConfig)
@@ -84,9 +85,12 @@ func (s *SystemEntity) Get() SystemConfig {
 // parseHostname Parses the global config and returns the hostname value
 //
 // Args:
-//  config (string): running config
+//
+//	config (string): running config
+//
 // Returns:
-//  string: The configured value for hostname.
+//
+//	string: The configured value for hostname.
 func parseHostname(config string) string {
 	hostName := regexp.MustCompile(`(?m)^hostname ([^\s]+)$`)
 	match := hostName.FindStringSubmatch(config)
@@ -99,7 +103,8 @@ func parseHostname(config string) string {
 // parseHostname Parses the global config and returns the hostname value
 //
 // Returns:
-//  string: The configured value for hostname.
+//
+//	string: The configured value for hostname.
 func (s *SystemEntity) parseHostname() string {
 	config := s.Config()
 	return parseHostname(config)
@@ -108,9 +113,12 @@ func (s *SystemEntity) parseHostname() string {
 // parseIpRouting Parses the global config and returns the ip routing value
 //
 // Args:
-//  config (string): running config
+//
+//	config (string): running config
+//
 // Returns:
-//  string: The configure value for ip routing.
+//
+//	string: The configure value for ip routing.
 func parseIPRouting(config string) bool {
 	if config == "" {
 		return false
@@ -122,7 +130,8 @@ func parseIPRouting(config string) bool {
 // parseIpRouting Parses the global config and returns the ip routing value
 //
 // Returns:
-//  string: The configure value for ip routing.
+//
+//	string: The configure value for ip routing.
 func (s *SystemEntity) parseIPRouting() bool {
 	config := s.Config()
 	return parseIPRouting(config)
@@ -131,14 +140,17 @@ func (s *SystemEntity) parseIPRouting() bool {
 // SetHostname Configures the global system hostname setting
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  value (str): The hostname value
-//  default (bool): Controls use of the default keyword
+//
+//	value (str): The hostname value
+//	default (bool): Controls use of the default keyword
 //
 // Returns:
-//  bool: True if the commands are completed successfully
+//
+//	bool: True if the commands are completed successfully
 func (s *SystemEntity) SetHostname(hostname string) bool {
 	if hostname == "" {
 		return s.Configure("no hostname")
@@ -149,10 +161,12 @@ func (s *SystemEntity) SetHostname(hostname string) bool {
 // SetHostnameDefault Configures the global default system hostname setting
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Returns:
-//  bool: True if the commands are completed successfully
+//
+//	bool: True if the commands are completed successfully
 func (s *SystemEntity) SetHostnameDefault() bool {
 	return s.Configure("default hostname")
 }
@@ -160,14 +174,17 @@ func (s *SystemEntity) SetHostnameDefault() bool {
 // SetIPRouting Configures the state of global ip routing
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Args:
-//  value(bool): True if ip routing should be enabled or False if
-//               ip routing should be disabled
+//
+//	value(bool): True if ip routing should be enabled or False if
+//	             ip routing should be disabled
 //
 // Returns:
-//  bool: True if the commands completed successfully otherwise False
+//
+//	bool: True if the commands completed successfully otherwise False
 func (s *SystemEntity) SetIPRouting(value string, enable bool) bool {
 	cmd := s.CommandBuilder("ip routing", value, false, enable)
 	return s.Configure(cmd)
@@ -176,10 +193,12 @@ func (s *SystemEntity) SetIPRouting(value string, enable bool) bool {
 // SetIPRoutingDefault Configures the default tate of global ip routing
 //
 // EosVersion:
-//    4.13.7M
+//
+//	4.13.7M
 //
 // Returns:
-//  bool: True if the commands completed successfully otherwise False
+//
+//	bool: True if the commands completed successfully otherwise False
 func (s *SystemEntity) SetIPRoutingDefault(value string) bool {
 	cmd := s.CommandBuilder("ip routing", value, true, false)
 	return s.Configure(cmd)

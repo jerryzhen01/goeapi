@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 //
@@ -148,23 +148,25 @@ func (p *PTPEntity) parse(config string, pattern string) string {
 }
 
 // PTPInterfaceConfig represents the parsed PTP interface config
-// {
-//		"enabled"     : "true",
-//		"role"        : "dynamic",
-//		"transport"   : "layer2",
-// }
+//
+//	{
+//			"enabled"     : "true",
+//			"role"        : "dynamic",
+//			"transport"   : "layer2",
+//	}
 type PTPInterfaceConfig map[string]string
 
 // PTPInterfaceCollection is a collection of PTPInterfaceConfigs
 // mapped by interface name:
-// {
-//		"Ethernet49/1" : PTPInterfaceConfig {
-//							"enabled"   : "false",
-//							"role"      : "dynamic",
-//							"transport" : "layer2",
-//						  },
-//		   "Ethernet1" : ...
-// }
+//
+//	{
+//			"Ethernet49/1" : PTPInterfaceConfig {
+//								"enabled"   : "false",
+//								"role"      : "dynamic",
+//								"transport" : "layer2",
+//							  },
+//			   "Ethernet1" : ...
+//	}
 type PTPInterfaceCollection map[string]PTPInterfaceConfig
 
 // PTPInterfaceEntity provides a configuration resource for PTP

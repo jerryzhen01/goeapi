@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 type DummyConnection struct {

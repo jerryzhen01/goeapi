@@ -36,26 +36,28 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 // GlobalMlagConfig represents a parsed Global Mlag entry
-// {
-//		"domain_id"      : "2",
-//		"local_interface": "1.1.1.1",
-//		"peer_address"   : "2.2.2.2",
-//		"peer_link"      : "Ethernet1",
-//		"shutdown"       : "false",
-// }
+//
+//	{
+//			"domain_id"      : "2",
+//			"local_interface": "1.1.1.1",
+//			"peer_address"   : "2.2.2.2",
+//			"peer_link"      : "Ethernet1",
+//			"shutdown"       : "false",
+//	}
 type GlobalMlagConfig map[string]string
 
 // InterfaceMlagConfig represents the parsed Mlag config for all
 // interfaces
-// {
-//		"Port-Channel1" : "2",
-//		"Port-Channel10" : "5",
-//		...
-// }
+//
+//	{
+//			"Port-Channel1" : "2",
+//			"Port-Channel10" : "5",
+//			...
+//	}
 type InterfaceMlagConfig map[string]string
 
 // MlagConfig represents an Mlag Config entry
@@ -154,10 +156,12 @@ func (m *MlagEntity) parseConfig() GlobalMlagConfig {
 // parseDomainID Scans the config block and parses the domain-id value
 //
 // Args:
-//  config (str): The config block to scan
+//
+//	config (str): The config block to scan
 //
 // Returns:
-//  string value of the domain-id. "" if not found
+//
+//	string value of the domain-id. "" if not found
 func (m *MlagEntity) parseDomainID(config string) string {
 	if config == "" {
 		return ""
@@ -174,10 +178,12 @@ func (m *MlagEntity) parseDomainID(config string) string {
 // value
 //
 // Args:
-//  config (str): The config block to scan
+//
+//	config (str): The config block to scan
 //
 // Returns:
-//  string value of the local-interface. "" if not found
+//
+//	string value of the local-interface. "" if not found
 func (m *MlagEntity) parseLocalInterface(config string) string {
 	if config == "" {
 		return ""
@@ -193,10 +199,12 @@ func (m *MlagEntity) parseLocalInterface(config string) string {
 // parsePeerAddress Scans the config block and parses the peer-address value
 //
 // Args:
-//  config (str): The config block to scan
+//
+//	config (str): The config block to scan
 //
 // Returns:
-//  string value of peer address. "" if not found
+//
+//	string value of peer address. "" if not found
 func (m *MlagEntity) parsePeerAddress(config string) string {
 	if config == "" {
 		return ""
@@ -212,10 +220,12 @@ func (m *MlagEntity) parsePeerAddress(config string) string {
 // parsePeerLink Scans the config block and parses the peer-link value
 //
 // Args:
-//  config (str): The config block to scan
+//
+//	config (str): The config block to scan
 //
 // Returns:
-//  String value of peer-link config. "" if not found
+//
+//	String value of peer-link config. "" if not found
 func (m *MlagEntity) parsePeerLink(config string) string {
 	if config == "" {
 		return ""
@@ -231,10 +241,12 @@ func (m *MlagEntity) parsePeerLink(config string) string {
 // parseShutdown Scans the config block and parses the shutdown value
 //
 // Args:
-//  config (str): The config block to scan
+//
+//	config (str): The config block to scan
 //
 // Returns:
-//  bool: True if interface is in shutdown state
+//
+//	bool: True if interface is in shutdown state
 func (m *MlagEntity) parseShutdown(config string) bool {
 	if config == "" {
 		return false
@@ -249,7 +261,8 @@ func (m *MlagEntity) parseShutdown(config string) bool {
 // parseInterfaces Scans the global config and returns the configured interfaces
 //
 // Returns:
-//  InterfaceMlagConfig object
+//
+//	InterfaceMlagConfig object
 func (m *MlagEntity) parseInterfaces() InterfaceMlagConfig {
 	config := m.Config()
 
@@ -275,10 +288,12 @@ func (m *MlagEntity) parseInterfaces() InterfaceMlagConfig {
 // GetSection returns the specified Mlag Entry for the name specified.
 //
 // Args:
-//  name (string): The Mlag name
+//
+//	name (string): The Mlag name
 //
 // Returns:
-//  Returns string representation of Mlag config entry
+//
+//	Returns string representation of Mlag config entry
 func (m *MlagEntity) GetSection() string {
 	config, err := m.GetBlock("mlag configuration")
 	if err != nil {
@@ -290,12 +305,14 @@ func (m *MlagEntity) GetSection() string {
 // ConfigureMlag is a config wrapper for initial mlag config command
 //
 // Args:
-//  cmd (string): command to issue
-//  value (string): The value to configure the mlag
-//  default (bool): Configures using the default keyword
+//
+//	cmd (string): command to issue
+//	value (string): The value to configure the mlag
+//	default (bool): Configures using the default keyword
 //
 // Returns:
-//  bool: True if the commands complete successfully
+//
+//	bool: True if the commands complete successfully
 func (m *MlagEntity) ConfigureMlag(cmd string, value string, def bool, enable bool) bool {
 	cfg := m.CommandBuilder(cmd, value, def, enable)
 	var commands = []string{"mlag configuration", cfg}
@@ -305,10 +322,12 @@ func (m *MlagEntity) ConfigureMlag(cmd string, value string, def bool, enable bo
 // SetDomainID Configures the mlag domain-id value
 //
 // Args:
-//  value (str): The value to configure the domain-id
+//
+//	value (str): The value to configure the domain-id
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetDomainID(value string) bool {
 	if value == "" {
 		return m.ConfigureMlag("domain-id", value, false, false)
@@ -319,7 +338,8 @@ func (m *MlagEntity) SetDomainID(value string) bool {
 // SetDomainIDDefault Configures the default mlag domain-id value
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetDomainIDDefault() bool {
 	return m.ConfigureMlag("domain-id", "", true, false)
 }
@@ -327,10 +347,12 @@ func (m *MlagEntity) SetDomainIDDefault() bool {
 // SetLocalInterface Configures the mlag local-interface value
 //
 // Args:
-//  value (str): The value to configure the local-interface
+//
+//	value (str): The value to configure the local-interface
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetLocalInterface(value string) bool {
 	if value == "" {
 		return m.ConfigureMlag("local-interface", value, false, false)
@@ -341,7 +363,8 @@ func (m *MlagEntity) SetLocalInterface(value string) bool {
 // SetLocalInterfaceDefault Configures the default mlag local-interface value
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetLocalInterfaceDefault() bool {
 	return m.ConfigureMlag("local-interface", "", true, false)
 }
@@ -349,11 +372,13 @@ func (m *MlagEntity) SetLocalInterfaceDefault() bool {
 // SetPeerAddress Configures the mlag peer-address value
 //
 // Args:
-//  value (str): The value to configure the peer-address
-//  default (bool): Configures the peer-address using the
+//
+//	value (str): The value to configure the peer-address
+//	default (bool): Configures the peer-address using the
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetPeerAddress(value string) bool {
 	if value == "" {
 		return m.ConfigureMlag("peer-address", value, false, false)
@@ -364,7 +389,8 @@ func (m *MlagEntity) SetPeerAddress(value string) bool {
 // SetPeerAddressDefault Configures the default mlag peer-address value
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetPeerAddressDefault() bool {
 	return m.ConfigureMlag("peer-address", "", true, false)
 }
@@ -372,12 +398,14 @@ func (m *MlagEntity) SetPeerAddressDefault() bool {
 // SetPeerLink Configures the mlag peer-link value
 //
 // Args:
-//  value (str): The value to configure the peer-link
-//  default (bool): Configures the peer-link using the
-//                  default keyword
+//
+//	value (str): The value to configure the peer-link
+//	default (bool): Configures the peer-link using the
+//	                default keyword
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetPeerLink(value string) bool {
 	if value == "" {
 		return m.ConfigureMlag("peer-link", value, false, false)
@@ -388,17 +416,20 @@ func (m *MlagEntity) SetPeerLink(value string) bool {
 // SetPeerLinkDefault Configures the default mlag peer-link value
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetPeerLinkDefault() bool {
 	return m.ConfigureMlag("peer-link", "", true, false)
 }
 
 // SetShutdown Configures the mlag shutdown value
 // Args:
-//  enable (bool): true for enabled, false for shutdown
+//
+//	enable (bool): true for enabled, false for shutdown
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetShutdown(enable bool) bool {
 	return m.ConfigureMlag("shutdown", "", false, enable)
 }
@@ -406,7 +437,8 @@ func (m *MlagEntity) SetShutdown(enable bool) bool {
 // SetShutdownDefault Configures the mlag default shutdown value
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetShutdownDefault() bool {
 	return m.ConfigureMlag("shutdown", "", true, false)
 }
@@ -414,12 +446,14 @@ func (m *MlagEntity) SetShutdownDefault() bool {
 // SetMlagID Configures the interface mlag value for the specified interface
 //
 // Args:
-//  name (str): The interface to configure.  Valid values for the
-//              name arg include Port-Channel*
-//  value (str): The mlag identifier to cofigure on the interface
+//
+//	name (str): The interface to configure.  Valid values for the
+//	            name arg include Port-Channel*
+//	value (str): The mlag identifier to cofigure on the interface
 //
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetMlagID(name string, value string) bool {
 	var cmd string
 	if value == "" {
@@ -435,11 +469,14 @@ func (m *MlagEntity) SetMlagID(name string, value string) bool {
 // specified interface
 //
 // Args:
-//  name (str): The interface to configure.  Valid values for the
-//              name arg include Port-Channel*
-//  value (str): The mlag identifier to cofigure on the interface
+//
+//	name (str): The interface to configure.  Valid values for the
+//	            name arg include Port-Channel*
+//	value (str): The mlag identifier to cofigure on the interface
+//
 // Returns:
-//  bool: Returns True if the commands complete successfully
+//
+//	bool: Returns True if the commands complete successfully
 func (m *MlagEntity) SetMlagIDDefault(name string) bool {
 	return m.ConfigureInterface(name, []string{"default mlag"}...)
 }

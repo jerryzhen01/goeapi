@@ -37,16 +37,17 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/aristanetworks/goeapi"
+	"github.com/jerryzhen01/goeapi"
 )
 
 // AclEntry represents a parsed Acl entry of the form
-//  {
-//      "action"  : ""
-//      "srcaddr" : ""
-//      "srclen"  : ""
-//      "log"     : ""
-//  }
+//
+//	{
+//	    "action"  : ""
+//	    "srcaddr" : ""
+//	    "srclen"  : ""
+//	    "log"     : ""
+//	}
 type AclEntry map[string]string
 
 // AclEntryMap is a key/value
@@ -133,10 +134,12 @@ func prefixlenToMask(prefixlen string) string {
 // Get returns the specified AclEntity from the nodes current configuration.
 //
 // Args:
-//  name (string): The ACL name
+//
+//	name (string): The ACL name
 //
 // Returns:
-//  Returns AclConfig object
+//
+//	Returns AclConfig object
 func (a *AclEntity) Get(name string) (*AclConfig, error) {
 	parent := "ip access-list standard " + name
 	config, err := a.GetBlock(parent)
@@ -156,8 +159,9 @@ func (a *AclEntity) Get(name string) (*AclConfig, error) {
 //
 // Returns:
 // Returns a hash that represents the entire ACL collection from
-//  the nodes running configuration. If there are no ACLs configured,
-//  this method will return an empty hash.
+//
+//	the nodes running configuration. If there are no ACLs configured,
+//	this method will return an empty hash.
 func (a *AclEntity) GetAll() map[string]*AclConfig {
 	config := a.Config()
 	re := regexp.MustCompile(`(?m)ip access-list standard ([^\s]+)`)
@@ -187,7 +191,8 @@ const (
 // the entries within an AclEntity.
 //
 // Args:
-//  config (string): The switch config.
+//
+//	config (string): The switch config.
 //
 // Return:
 func (a *AclEntity) parseEntries(config string) AclEntryMap {
@@ -231,10 +236,12 @@ func (a *AclEntity) parseEntries(config string) AclEntryMap {
 // GetSection returns the specified Acl Entry for the name specified.
 //
 // Args:
-//  name (string): The ACL name
+//
+//	name (string): The ACL name
 //
 // Returns:
-//  Returns string representation of Acl config entry
+//
+//	Returns string representation of Acl config entry
 func (a *AclEntity) GetSection(name string) string {
 	parent := "ip access-list standard " + name
 	config, err := a.GetBlock(parent)
@@ -250,16 +257,18 @@ func (a *AclEntity) GetSection(name string) string {
 // return true. The ACL will not have any entries. Use add_entry
 // to add entries to the ACL.
 //
-//  EosVersion
-//      4.13.7M
+//	EosVersion
+//	    4.13.7M
 //
 // Args:
-//      name (string): The ACL name to create on the node. Must begin
-//                 with an alphabetic character. Cannot contain spaces or
-//                 quotation marks.
+//
+//	name (string): The ACL name to create on the node. Must begin
+//	           with an alphabetic character. Cannot contain spaces or
+//	           quotation marks.
 //
 // Returns:
-//  returns true if the command completed successfully
+//
+//	returns true if the command completed successfully
 func (a *AclEntity) Create(name string) bool {
 	var commands = []string{"ip access-list standard " + name}
 	return a.Configure(commands...)
@@ -269,14 +278,15 @@ func (a *AclEntity) Create(name string) bool {
 // running configuration.  If the delete method is called and the ACL
 // does not exist, this method will succeed.
 //
-//  EosVersion
-//      4.13.7M
+//	EosVersion
+//	    4.13.7M
 //
-//  Args:
-//      name (string): The ACL name to delete on the node.
+//	Args:
+//	    name (string): The ACL name to delete on the node.
 //
 // Returns:
-//  returns true if the command completed successfully
+//
+//	returns true if the command completed successfully
 func (a *AclEntity) Delete(name string) bool {
 	var commands = []string{"no ip access-list standard " + name}
 	return a.Configure(commands...)
@@ -286,15 +296,17 @@ func (a *AclEntity) Delete(name string) bool {
 // command has the same effect as deleting the ACL from the nodes
 // running configuration.
 //
-//  EosVersion
-//      4.13.7M
+//	EosVersion
+//	    4.13.7M
 //
 // Args:
-//  name (string): The ACL name to set to the default value
-//                 on the node.
+//
+//	name (string): The ACL name to set to the default value
+//	               on the node.
 //
 // Returns:
-//  returns true if the command complete successfully
+//
+//	returns true if the command complete successfully
 func (a *AclEntity) Default(name string) bool {
 	var commands = []string{"default ip access-list standard " + name}
 	return a.Configure(commands...)
@@ -303,20 +315,21 @@ func (a *AclEntity) Default(name string) bool {
 // UpdateEntry will update an entry, identified by the seqno
 // in the ACL specified by name, with the passed in parameters.
 //
-//  EosVersion
-//      4.13.7M
+//	EosVersion
+//	    4.13.7M
 //
-//  name (string): The ACL name to update on the node.
-//  seqno (string): The sequence number of the entry in the ACL to update.
-//  action (string): The action triggered by the ACL. Valid
-//                   values are 'permit', 'deny', or 'remark'
-//  addr (string): The IP address to permit or deny.
-//  prefixlen (string):  The prefixlen for the IP address.
-//  log (bool): Triggers an informational log message to the console
-//              about the matching packet.
+//	name (string): The ACL name to update on the node.
+//	seqno (string): The sequence number of the entry in the ACL to update.
+//	action (string): The action triggered by the ACL. Valid
+//	                 values are 'permit', 'deny', or 'remark'
+//	addr (string): The IP address to permit or deny.
+//	prefixlen (string):  The prefixlen for the IP address.
+//	log (bool): Triggers an informational log message to the console
+//	            about the matching packet.
 //
 // Returns:
-//  returns true if the command complete successfully
+//
+//	returns true if the command complete successfully
 func (a *AclEntity) UpdateEntry(name string, seqno string, action string, addr string,
 	prefixlen string, log bool) bool {
 
@@ -335,19 +348,20 @@ func (a *AclEntity) UpdateEntry(name string, seqno string, action string, addr s
 // AddEntry will add an entry to the specified ACL with the
 // passed in parameters.
 //
-//  EosVersion
-//      4.13.7M
+//	EosVersion
+//	    4.13.7M
 //
-//  name (string): The ACL name to update on the node.
-//  action (string): The action triggered by the ACL. Valid
-//                   values are 'permit', 'deny', or 'remark'
-//  addr (string): The IP address to permit or deny.
-//  prefixlen (string):  The prefixlen for the IP address.
-//  log (bool): Triggers an informational log message to the console
-//              about the matching packet.
+//	name (string): The ACL name to update on the node.
+//	action (string): The action triggered by the ACL. Valid
+//	                 values are 'permit', 'deny', or 'remark'
+//	addr (string): The IP address to permit or deny.
+//	prefixlen (string):  The prefixlen for the IP address.
+//	log (bool): Triggers an informational log message to the console
+//	            about the matching packet.
 //
 // Returns:
-//  returns true if the command complete successfully
+//
+//	returns true if the command complete successfully
 func (a *AclEntity) AddEntry(name string, action string, addr string,
 	prefixlen string, log bool) bool {
 
@@ -364,15 +378,17 @@ func (a *AclEntity) AddEntry(name string, action string, addr string,
 // RemoveEntry will remove the entry specified by the seqno for
 // the ACL specified by name.
 //
-//  EosVersion:
-//      4.13.7M
+//	EosVersion:
+//	    4.13.7M
 //
 // Args:
-//  name (string): The ACL name to update on the node.
-//  seqno (int): The sequence number of the entry in the ACL to remove.
+//
+//	name (string): The ACL name to update on the node.
+//	seqno (int): The sequence number of the entry in the ACL to remove.
 //
 // Returns:
-//  returns true if the command complete successfully
+//
+//	returns true if the command complete successfully
 func (a *AclEntity) RemoveEntry(name string, seqno int) bool {
 	var commands = []string{
 		"ip access-list standard " + name,

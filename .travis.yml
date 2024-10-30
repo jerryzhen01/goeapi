@@ -11,7 +11,7 @@ before_script:
   # vet the code...fail build if error
   - make vet
 script:
-  - go get github.com/aristanetworks/goeapi
+  - go get github.com/jerryzhen01/goeapi
   - make -j4 test GOTEST_FLAGS=-v
 after_success:
   - make coverdata
